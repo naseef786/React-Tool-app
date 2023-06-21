@@ -1,0 +1,20 @@
+.navbar {
+    background-color: #333;
+    padding: 10px;
+    width: 1042px;
+    height: 150px;
+    padding-left: 94px;
+    border-radius: 101px;
+    --bs-border-radius-2xl: aquamarine;
+  }
+  
+  .navbar-link {
+    color: #fff;
+    margin-right: 10px;
+    text-decoration: none;
+  }
+  
+  .navbar-link:hover {
+    text-decoration: underline;
+  }
+  

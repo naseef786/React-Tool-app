@@ -21,7 +21,14 @@ const  HandleSubmit = async (e)=> {
 }
 
     return (
-      <form onSubmit={HandleSubmit}>
+      <div style={{    display: 'flex',
+      flexDirection: 'column',
+      flexWrap: 'wrap',
+      alignContent: 'center',
+      justifyContent: 'center',
+      alignItems: 'center'}}>
+    <form style={{    height: '22rem',
+  width: '29rem'}} onSubmit={HandleSubmit}>
         <h3>Sign Up</h3>
         
         
@@ -55,10 +62,10 @@ const  HandleSubmit = async (e)=> {
           </button>
         </div>
         <p className="forgot-password text-right">
-          Already registered <a href="/sign-in">sign in?</a>
+          Already registered <a href="/admin/sign-in">sign in?</a>
         </p>
       </form>
-    )
+      </div>)
   }
 
 

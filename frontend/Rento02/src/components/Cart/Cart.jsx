@@ -11,8 +11,28 @@ import {
     MDBTypography,
     } from "mdb-react-ui-kit";
     import React from "react";
+    import { useState,useEffect } from "react";
     
     export default function Cart() {
+      const [cart,setCart] = useState([]);
+      const [token, setToken] = useState(localStorage.getItem('token') || '');
+      useEffect(()=>{
+        fetchCart();
+      }, []);
+      const fetchCart = async() => {
+        try {
+            const response = await axios.get("/Cart", {
+                headers: {
+                    Authorization: token,
+                }
+            });
+            console.log(response.data);
+            setCart(response.data);
+        } catch (error) {
+            console.log(error);
+            // Handle error (e.g., display error message)
+        }
+    };
     return (
     <section className="h-100 h-custom" style={{ backgroundColor: "#eee" }}>
       <MDBContainer className="py-5 h-100">

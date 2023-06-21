@@ -11,10 +11,15 @@ import { useNavigate } from 'react-router-dom';
 function Home() {
 const [products,setProducts] = useState([])
 useEffect(()=>{
+ 
   fetchProducts()
 },[])
+const token = localStorage.getItem('token');
   const fetchProducts = async()=>{
-  let response = await axios.get("/")
+  let response = await axios.get("/",{
+    headers: {
+      Authorization: token,
+    }})
 console.log(response.data.items);
   setProducts(response.data.items);
 }

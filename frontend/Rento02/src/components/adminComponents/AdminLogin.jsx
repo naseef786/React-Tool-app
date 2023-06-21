@@ -1,34 +1,51 @@
 import React from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useState,useContext } from 'react';
-import { UserContext } from '../../config/AuthContext';
+import { AdminContext } from '../../config/AdminContext';
 import axios from 'axios';
 export default function Login(){
-
+  const [token, setToken] = useState(localStorage.getItem('token') || '');
   const [email,setEmail] = useState('')
   const [password,setPassword]= useState('')
   const navigate = useNavigate()
-  const {setUser} = useContext(UserContext)
+  const {setAdmin} = useContext(AdminContext)
   const  HandleSubmit = async (e)=> {
     e.preventDefault()
   
     try {
         const response = await axios.post('/admin/adminlogin', { email, password });
-        const responseData = response.data;
+        console.log(response.data.token);
+      // Handle success response
+      const {token }=await response.data
+     
+      setToken(token);
+      // Store token in local storage or cookies
+      localStorage.setItem('token', token);
+      setEmail('');
+        setPassword('');
+      navigate('/')
+      setAdmin(response.data.admin)
+      if(response.data.status=="true"){
+        alert('logged in successfully')
+     
+      }else{alert('something went wrong')
+    navigate('/sign-in')}
       
-        if (responseData.admin) {
-          alert('logged in successfully')
-          setUser(responseData.admin)
           navigate('/admin')
-        } else {
-          alert('something went wrong');
-        }
+        
       } catch (error) {
         console.error(error); // Handle error
       }
     }
     return (
-      <form onSubmit={HandleSubmit}>
+      <div style={{    display: 'flex',
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        alignContent: 'center',
+        justifyContent: 'center',
+        alignItems: 'center'}}>
+      <form style={{    height: '22rem',
+    width: '29rem'}} onSubmit={HandleSubmit}>
         <h3>Sign In</h3>
         <div className="mb-3">
           <label>Email address</label>
@@ -69,9 +86,10 @@ export default function Login(){
             Submit
           </button>
         </div>
-        <p className="forgot-password text-right">
-          Forgot <a href="#">password?</a>
+        <p className="not registered text-right">
+          not <a href="/admin/sign-up">registered  yet?</a>
         </p>
       </form>
+    </div>
     )
     }
